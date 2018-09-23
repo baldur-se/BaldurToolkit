@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>BaldurToolkit.DataTables</PackageId>
+    <AssemblyName>BaldurToolkit.DataTables</AssemblyName>
+    <AssemblyTitle>BaldurToolkit.DataTables</AssemblyTitle>
+    <Description>In-memory indexed collections.</Description>
+    <Copyright>Copyright (C) 2010-2017 Baldur Team</Copyright>
+    <Authors>Baldur Team</Authors>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7</LangVersion>
+    <NoWarn>$(NoWarn);SA0001;SA1600;SA1602;SA1633;SA1652</NoWarn>
+    <TreatWarningsAsErrors Condition=" '$(Configuration)' == 'Release' ">true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="2.16.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

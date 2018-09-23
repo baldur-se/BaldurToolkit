@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>BaldurToolkit.Network</PackageId>
+    <AssemblyName>BaldurToolkit.Network</AssemblyName>
+    <AssemblyTitle>BaldurToolkit.Network</AssemblyTitle>
+    <Description>Client-server network communication abstractions.</Description>
+    <Copyright>Copyright (C) 2010-2017 Baldur Team</Copyright>
+    <Authors>Baldur Team</Authors>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7</LangVersion>
+    <NoWarn>$(NoWarn);SA0001;SA1600;SA1602;SA1633;SA1652</NoWarn>
+    <TreatWarningsAsErrors Condition=" '$(Configuration)' == 'Release' ">true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

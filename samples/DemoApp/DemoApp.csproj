@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>DemoApp</PackageId>
+    <AssemblyName>DemoApp</AssemblyName>
+    <AssemblyTitle>DemoApp</AssemblyTitle>
+    <Description>DemoApp</Description>
+    <Copyright>Copyright (C) 2010-2017 Baldur Team</Copyright>
+    <Authors>Baldur Team</Authors>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>7</LangVersion>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="DemoApp.app.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BaldurToolkit.App\BaldurToolkit.App.csproj" />
+    <ProjectReference Include="..\..\src\BaldurToolkit.AppRunner\BaldurToolkit.AppRunner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

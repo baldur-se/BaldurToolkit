@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AppInfo>
+
+	<!-- Basic app info -->
+	<App Name="DemoApp" Type="BaldurToolkit.App.GenericApp, BaldurToolkit.App" />
+
+
+	<!-- Modules (DI container initialization) -->
+	<!-- Each type must implement BaldurToolkit.App.DependencyInjection.IAppModule -->
+	<Modules>
+		<Module Type="DemoApp.DemoAppModule, DemoApp" />
+		<Module Type="DemoApp.DemoAppDevModule, DemoApp" Environment="dev" />
+	</Modules>
+
+
+	<!-- Start specified services -->
+	<!-- Each type must implement BaldurToolkit.App.IAppStartupService and must be registered in the DI container -->
+	<Startup>
+		<Service Type="DemoApp.DemoAppTestService, DemoApp" />
+		<Service Type="DemoApp.DemoAppDevService, DemoApp" Environment="dev" />
+	</Startup>
+
+
+	<!-- App configuration files -->
+	<Configuration>
+		<File Type="ini" Path="{config_dir}/{AppName}.ini" ReloadOnChange="true" />
+		<File Type="ini" Path="{config_dir}/{AppName}.{AppInstanceName}.ini" Optional="true" ReloadOnChange="true" />
+		<File Type="ini" Path="{config_dir}/{AppName}.{AppInstanceName}.{AppEnvironment}.ini" Optional="true" ReloadOnChange="true" />
+	</Configuration>
+
+
+	<!-- Filesystem path map -->
+  <!-- Available base pathmap parameters: {WorkingDir}, {AppRootDir}, {SystemTempDir}, {AppName}, {AppInstanceName}, {AppEnvironment} -->
+	<FileSystem>
+		<PathMap Name="default">
+			<Path Name="config_dir" Path="{WorkingDir}/conf" />
+			<Path Name="logger_config_file" Path="{config_dir}/NLog.config" />
+			<Path Name="logger_output_dir" Path="{WorkingDir}/log" />
+			<Path Name="app_auth_key_dir" Path="{WorkingDir}/keys" />
+			<Path Name="data_dir">
+				<Item Path="{WorkingDir}/data/user" />
+				<Item Path="{WorkingDir}/data/default" />
+			</Path>
+		</PathMap>
+		<PathMap Name="unix" Prefix="/usr/local" Extends="default">
+			<Path Name="config_dir" Path="/etc/baldur" />
+			<Path Name="logger_output_dir" Path="/var/log/baldur" />
+			<Path Name="app_auth_key_dir" Path="/var/lib/baldur/keys" />
+		</PathMap>
+	</FileSystem>
+
+</AppInfo>
