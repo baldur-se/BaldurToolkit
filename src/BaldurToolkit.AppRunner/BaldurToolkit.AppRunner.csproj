@@ -5,8 +5,9 @@
     <AssemblyName>BaldurToolkit.AppRunner</AssemblyName>
     <AssemblyTitle>BaldurToolkit.AppRunner</AssemblyTitle>
     <Description>Base implementation of BaldurToolkit App System host.</Description>
-    <Copyright>Copyright (C) 2010-2017 Baldur Team</Copyright>
+    <Copyright>Copyright (C) 2010-2018 Baldur Team</Copyright>
     <Authors>Baldur Team</Authors>
+    <VersionPrefix>0.6.0</VersionPrefix>
     <TargetFrameworks>net461;netcoreapp2.0;netcoreapp2.1</TargetFrameworks>
     <LangVersion>7</LangVersion>
     <OutputType>Exe</OutputType>
