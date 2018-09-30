@@ -25,7 +25,7 @@ namespace BaldurToolkit.AppRunner
 
         public string AppXmlFile { get; private set; }
 
-        public string AppInstanceName { get; set; } = AppIdentity.DefaultInstanceName;
+        public string AppKind { get; set; } = AppIdentity.DefaultKind;
 
         public string PathMapName { get; set; } = "default";
 
@@ -88,7 +88,7 @@ namespace BaldurToolkit.AppRunner
             {
                 var appPathMap = new PathMap(pm.Name, pm.Prefix, basePathMap);
                 appPathMap.Set("AppName", appInfo.App.Name);
-                appPathMap.Set("AppInstanceName", this.AppInstanceName);
+                appPathMap.Set("AppKind", this.AppKind);
                 appPathMap.Set("AppEnvironment", this.EnvName ?? string.Empty);
 
                 foreach (var path in pm.Paths ?? new Xml.PathMapPathElement[0])
@@ -202,7 +202,7 @@ namespace BaldurToolkit.AppRunner
             // Initialize service container required to build and run an application
             var services = new ServiceCollection();
             services.AddTransient(appType);
-            services.AddSingleton(provider => new AppIdentity(appInfo.App.Name, this.AppInstanceName));
+            services.AddSingleton(provider => new AppIdentity(appInfo.App.Name, this.AppKind));
             services.AddSingleton(provider => new AppEnvironment(this.EnvName, appPathMap));
             services.AddSingleton(provider => appConfiguration);
             services.AddSingleton<IAppModuleCollection>(provider => modules);

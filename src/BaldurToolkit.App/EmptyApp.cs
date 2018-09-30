@@ -11,14 +11,14 @@ namespace BaldurToolkit.App
         private readonly IList<EventHandler> stoppingEventHandlers = new List<EventHandler>();
         private readonly IList<EventHandler> stoppedEventHandlers = new List<EventHandler>();
 
-        protected EmptyApp(string name, string instanceName)
+        protected EmptyApp(string name, string kind)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.InstanceName = instanceName ?? throw new ArgumentNullException(nameof(instanceName));
+            this.Kind = kind ?? throw new ArgumentNullException(nameof(kind));
         }
 
         protected EmptyApp(AppIdentity appIdentity)
-            : this(appIdentity.Name, appIdentity.InstanceName)
+            : this(appIdentity.Name, appIdentity.Kind)
         {
         }
 
@@ -43,7 +43,7 @@ namespace BaldurToolkit.App
         public string Name { get; }
 
         /// <inheritdoc />
-        public string InstanceName { get; }
+        public string Kind { get; }
 
         /// <inheritdoc />
         public Guid InstanceGuid { get; } = Guid.NewGuid();
@@ -114,7 +114,7 @@ namespace BaldurToolkit.App
 
         public override string ToString()
         {
-            return $"{this.Name} ({this.InstanceName})";
+            return $"{this.Name} ({this.Kind})";
         }
 
         /// <summary>

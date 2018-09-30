@@ -29,7 +29,7 @@ namespace BaldurToolkit.AppRunner
                 appXmlFileOption = this.Option("-a|--app <APP_XML_FILE_PATH>", "Specify different app xml file.", CommandOptionType.SingleValue);
             }
 
-            var appInstanceNameOption = this.Option("-i|--id <INSTANCE_NAME>", "Specify app instance name", CommandOptionType.SingleValue);
+            var appKindOption = this.Option("-k|--kind <NAME>", "Specify the app kind (sub-type, useful for splitting configuration and logs)", CommandOptionType.SingleValue);
             var envNameOption = this.Option("-e|--env <NAME>", "Set an environment name", CommandOptionType.SingleValue);
             var pathMapNameOption = this.Option("-p|--pathmap <NAME>", "Specify a pathmap name to use for the application", CommandOptionType.SingleValue);
             var pathMapPrefOption = this.Option("--pathmap-prefix <PREFIX>", "Set a pathmap prefix", CommandOptionType.SingleValue);
@@ -74,7 +74,7 @@ namespace BaldurToolkit.AppRunner
 
                 var appInitializer = new AppInitializer(appXmlFilePath)
                 {
-                    AppInstanceName = appInstanceNameOption.Value() ?? AppIdentity.DefaultInstanceName,
+                    AppKind = appKindOption.Value() ?? AppIdentity.DefaultKind,
                     PathMapName = pathMapNameOption.Value() ?? "default",
                     PathMapPrefix = pathMapPrefOption.Value(),
                     PathMapOverrides = pathMapOverrides,
@@ -84,7 +84,7 @@ namespace BaldurToolkit.AppRunner
 
                 Console.WriteLine("Initializing App...");
                 Console.WriteLine("  App xml file: \"{0}\"", appInitializer.AppXmlFile);
-                Console.WriteLine("  App instance name: \"{0}\"", appInitializer.AppInstanceName);
+                Console.WriteLine("  App kind: \"{0}\"", appInitializer.AppKind);
                 Console.WriteLine("  PathMap name: \"{0}\"", appInitializer.PathMapName);
                 Console.WriteLine("  PathMap prefix: \"{0}\"", appInitializer.PathMapPrefix);
                 Console.WriteLine("  Environment name: \"{0}\"", appInitializer.EnvName);
@@ -93,7 +93,7 @@ namespace BaldurToolkit.AppRunner
 
                 var app = appInitializer.Initialize();
 
-                Console.Title = $"{app.Name} ({app.InstanceName})";
+                Console.Title = $"{app.Name} ({app.Kind})";
                 Console.WriteLine("Starting the app...");
                 Console.WriteLine();
 

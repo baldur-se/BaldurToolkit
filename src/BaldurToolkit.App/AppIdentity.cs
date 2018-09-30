@@ -10,14 +10,14 @@ namespace BaldurToolkit.App
         public const string DefaultName = "App";
 
         /// <summary>
-        /// Default application instance name.
+        /// Default application kind.
         /// </summary>
-        public const string DefaultInstanceName = "default";
+        public const string DefaultKind = "default";
 
-        public AppIdentity(string name = DefaultName, string instanceName = DefaultInstanceName)
+        public AppIdentity(string name = DefaultName, string kind = DefaultKind)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.InstanceName = instanceName ?? throw new ArgumentNullException(nameof(instanceName));
+            this.Kind = kind ?? throw new ArgumentNullException(nameof(kind));
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace BaldurToolkit.App
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the instance name of the application.
+        /// Gets or sets the kind of the application.
         /// </summary>
-        public string InstanceName { get; set; }
+        public string Kind { get; set; }
     }
 }

@@ -27,9 +27,9 @@ namespace BaldurToolkit.App
         string Name { get; }
 
         /// <summary>
-        /// Gets the name of the app instance.
+        /// Gets the kind of the current app instance.
         /// </summary>
-        string InstanceName { get; }
+        string Kind { get; }
 
         /// <summary>
         /// Gets the GUID of current app instance.

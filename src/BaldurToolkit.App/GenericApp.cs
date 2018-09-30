@@ -35,9 +35,9 @@ namespace BaldurToolkit.App
         /// Basic constructor for inherited classes.
         /// </summary>
         /// <param name="name">The name of the app.</param>
-        /// <param name="instanceName">The app instance name that distinguishes multiple apps with the same name.</param>
-        protected GenericApp(string name, string instanceName)
-            : base(name, instanceName)
+        /// <param name="kind">The app kind (sub-type, useful for splitting configuration and logs).</param>
+        protected GenericApp(string name, string kind)
+            : base(name, kind)
         {
         }
 
