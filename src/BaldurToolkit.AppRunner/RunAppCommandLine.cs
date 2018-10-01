@@ -78,7 +78,7 @@ namespace BaldurToolkit.AppRunner
                     PathMapName = pathMapNameOption.Value() ?? "default",
                     PathMapPrefix = pathMapPrefOption.Value(),
                     PathMapOverrides = pathMapOverrides,
-                    EnvName = envNameOption.Value(),
+                    EnvName = envNameOption.Value() ?? "dev",
                     DisableRunnerModule = noRunnerModuleOption.HasValue(),
                 };
 
