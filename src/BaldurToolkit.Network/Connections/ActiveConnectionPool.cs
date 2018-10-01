@@ -118,7 +118,15 @@ namespace BaldurToolkit.Network.Connections
                     request.ConnectionCreated += this.OnConnectionCreated;
                     request.ConnectionError += this.OnConnectionCreationError;
 
-                    this.OnConnectionRequested(request);
+                    try
+                    {
+                        this.OnConnectionRequested(request);
+                    }
+                    catch (Exception exception)
+                    {
+                        request.Fail(exception);
+                        throw;
+                    }
                 }
             }
             catch (Exception exception)
