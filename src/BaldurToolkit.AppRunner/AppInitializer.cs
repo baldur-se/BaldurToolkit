@@ -139,34 +139,41 @@ namespace BaldurToolkit.AppRunner
                     continue;
                 }
 
+                var loaded = false;
                 foreach (var configPath in appPathMap.Compile(file.Path))
                 {
-                    try
+                    if (File.Exists(configPath))
                     {
-                        IConfigurationSource source;
-                        switch (file.Type)
+                        try
                         {
-                            case "ini": source = new IniConfigurationSource(); break;
-                            case "xml": source = new XmlConfigurationSource(); break;
-                            case "json": source = new JsonConfigurationSource(); break;
-                            default: throw new Exception("Unknown configuration type.");
+                            FileConfigurationSource source;
+                            switch (file.Type)
+                            {
+                                case "ini": source = new IniConfigurationSource(); break;
+                                case "xml": source = new XmlConfigurationSource(); break;
+                                case "json": source = new JsonConfigurationSource(); break;
+                                default: throw new Exception("Unknown configuration type.");
+                            }
+
+                            source.FileProvider = new PhysicalFileProvider(Path.GetDirectoryName(configPath));
+                            source.Path = Path.GetFileName(configPath);
+                            source.ReloadOnChange = file.ReloadOnChange;
+
+                            builder.Add(source);
+                        }
+                        catch (Exception exception)
+                        {
+                            throw new Exception($"Can not read configuration file \"{configPath}\": {exception.Message}", exception);
                         }
 
-                        if (source is FileConfigurationSource)
-                        {
-                            var fileConfigurationSource = (FileConfigurationSource)source;
-                            fileConfigurationSource.FileProvider = new PhysicalFileProvider(Path.GetDirectoryName(configPath));
-                            fileConfigurationSource.Path = Path.GetFileName(configPath);
-                            fileConfigurationSource.Optional = file.Optional;
-                            fileConfigurationSource.ReloadOnChange = file.ReloadOnChange;
-                        }
+                        loaded = true;
+                        break;
+                    }
+                }
 
-                        builder.Add(source);
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new Exception($"Can not read configuration file \"{configPath}\": {exception.Message}", exception);
-                    }
+                if (!file.Optional && !loaded)
+                {
+                    throw new Exception($"Can not find required configuration file \"{file.Path}\".");
                 }
             }
 
