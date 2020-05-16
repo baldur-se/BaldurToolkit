@@ -13,6 +13,8 @@ namespace BaldurToolkit.DataTables
 
         public Type ElementsType { get; }
 
+        public virtual Type TableType => this.GetType();
+
         public string TableName { get; }
 
         public string[] Dependencies { get; }

@@ -10,6 +10,11 @@ namespace BaldurToolkit.DataTables
         Type ElementsType { get; }
 
         /// <summary>
+        /// Gets the type of the table under which it will be registered in the list.
+        /// </summary>
+        Type TableType { get; }
+
+        /// <summary>
         /// Gets the name of the table in the data source.
         /// </summary>
         string TableName { get; }

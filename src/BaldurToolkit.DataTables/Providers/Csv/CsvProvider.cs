@@ -56,7 +56,7 @@ namespace BaldurToolkit.DataTables.Providers.Csv
                         csvTable.Build(csv, containerToLoad);
                     }
 
-                    containerToLoad.Add(table.GetType(), table);
+                    containerToLoad.Add(table.TableType, table);
                     {
                         this.DataTableLoaded?.Invoke(this, new DataTableLoadedEventArgs(table.TableName, filePath));
                     }
