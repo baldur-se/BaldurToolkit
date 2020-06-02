@@ -17,6 +17,11 @@ namespace BaldurToolkit.Entities.BehaviorTrees
 
         public ITask BaseTask { get; }
 
+        protected override TaskStatus OnUpdate()
+        {
+            return this.BaseTask.Update();
+        }
+
         protected override void OnStop(bool interrupted)
         {
             base.OnStop(interrupted);
