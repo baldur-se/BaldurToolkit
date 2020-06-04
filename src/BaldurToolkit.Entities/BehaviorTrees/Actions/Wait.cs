@@ -30,7 +30,7 @@ namespace BaldurToolkit.Entities.BehaviorTrees.Actions
             this.WaitDuration = waitDuration;
         }
 
-        public TimeSpan WaitDuration { get; }
+        public virtual TimeSpan WaitDuration { get; }
 
         protected override void OnStart()
         {
