@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace BaldurToolkit.DataTables.Indexes
 {
-    public class Index<TKey1, TKey2, TElement> : Index<Tuple<TKey1, TKey2>, TElement>
+    public class AggregatedIndex<TKey1, TKey2, TElement> : AggregatedIndex<Tuple<TKey1, TKey2>, TElement>
     {
-        public Index(IEnumerable<TElement> items, Func<TElement, TKey1> key1Expression, Func<TElement, TKey2> key2Expression)
+        public AggregatedIndex(IEnumerable<TElement> items, Func<TElement, TKey1> key1Expression, Func<TElement, TKey2> key2Expression)
             : base(items, value => Tuple.Create(key1Expression(value), key2Expression(value)))
         {
         }
 
-        public Index(IEnumerable<TElement> items, Func<TElement, TKey1> key1Expression, Func<TElement, TKey2> key2Expression, IEqualityComparer<Tuple<TKey1, TKey2>> comparer)
+        public AggregatedIndex(IEnumerable<TElement> items, Func<TElement, TKey1> key1Expression, Func<TElement, TKey2> key2Expression, IEqualityComparer<Tuple<TKey1, TKey2>> comparer)
             : base(items, value => Tuple.Create(key1Expression(value), key2Expression(value)), comparer)
         {
         }

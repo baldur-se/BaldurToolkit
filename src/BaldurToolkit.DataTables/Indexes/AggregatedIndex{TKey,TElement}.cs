@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace BaldurToolkit.DataTables.Indexes
 {
-    public class Index<TKey, TElement>
+    public class AggregatedIndex<TKey, TElement>
     {
-        public Index(IEnumerable<TElement> items, Func<TElement, TKey> keyExpression)
+        public AggregatedIndex(IEnumerable<TElement> items, Func<TElement, TKey> keyExpression)
         {
             this.Lookup = items.ToLookup(keyExpression);
         }
 
-        public Index(IEnumerable<TElement> items, Func<TElement, TKey> keyExpression, IEqualityComparer<TKey> comparer)
+        public AggregatedIndex(IEnumerable<TElement> items, Func<TElement, TKey> keyExpression, IEqualityComparer<TKey> comparer)
         {
             this.Lookup = items.ToLookup(keyExpression, comparer);
         }

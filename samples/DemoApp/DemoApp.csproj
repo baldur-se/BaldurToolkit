@@ -7,9 +7,9 @@
     <Description>DemoApp</Description>
     <Copyright>Copyright (C) 2010-2017 Baldur Team</Copyright>
     <Authors>Baldur Team</Authors>
-    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>7</LangVersion>
+    <LangVersion>8</LangVersion>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
@@ -25,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.4" />
   </ItemGroup>
 
 </Project>

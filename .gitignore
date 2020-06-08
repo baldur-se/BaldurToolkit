@@ -11,8 +11,9 @@
 *.resources
 *.vs10x
 *_ReSharper.*
-.vs
-.vscode
+.vs/
+.vscode/
+.idea/
 
 
 ###### Binary files
