@@ -84,13 +84,13 @@ namespace BaldurToolkit.Network.Connections
         {
             var tcs = new TaskCompletionSource<object>();
 
-            TConnection[] connectionsToClose;
+            HashSet<TConnection> connectionsToClose;
             lock (this.openedConnections)
             {
-                connectionsToClose = this.openedConnections.ToArray();
+                connectionsToClose = new HashSet<TConnection>(this.openedConnections);
             }
 
-            if (connectionsToClose.Length == 0)
+            if (connectionsToClose.Count == 0)
             {
                 tcs.SetResult(null);
             }
@@ -98,10 +98,16 @@ namespace BaldurToolkit.Network.Connections
             {
                 this.ConnectionClosed += (sender, args) =>
                 {
-                    if (this.ConnectionCount == 0)
+                    lock (connectionsToClose)
                     {
-                        tcs.TrySetResult(null);
+                        connectionsToClose.Remove(args.Connection);
+                        if (connectionsToClose.Count > 0)
+                        {
+                            return;
+                        }
                     }
+
+                    tcs.TrySetResult(null);
                 };
                 foreach (var connection in connectionsToClose)
                 {
