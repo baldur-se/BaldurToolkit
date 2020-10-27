@@ -7,8 +7,12 @@ namespace BaldurToolkit.Entities.Timers
     {
         private readonly List<WorkerInfo> workers = new List<WorkerInfo>();
 
+        public event EventHandler<UpdateErrorEventArgs> UpdateError;
+
         public void Add(Func<IUpdateable, bool> predicate, IUpdateWorker worker)
         {
+            worker.UpdateError += this.OnWorkerUpdateError;
+
             this.workers.Add(new WorkerInfo(predicate, worker));
         }
 
@@ -52,6 +56,11 @@ namespace BaldurToolkit.Entities.Timers
             {
                 workerInfo.Worker.Stop();
             }
+        }
+
+        private void OnWorkerUpdateError(object sender, UpdateErrorEventArgs args)
+        {
+            this.UpdateError?.Invoke(this, args);
         }
 
         protected struct WorkerInfo

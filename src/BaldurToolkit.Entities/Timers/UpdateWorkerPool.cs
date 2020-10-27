@@ -11,12 +11,16 @@ namespace BaldurToolkit.Entities.Timers
         private bool isStarted;
         private int balanceCounter;
 
+        public event EventHandler<UpdateErrorEventArgs> UpdateError;
+
         public void Add(IUpdateWorker worker)
         {
             if (this.isStarted)
             {
                 throw new Exception("Unable to add worker to the pool: pool is already started.");
             }
+
+            worker.UpdateError += this.OnWorkerUpdateError;
 
             this.workers.Add(worker);
         }
@@ -76,6 +80,11 @@ namespace BaldurToolkit.Entities.Timers
             {
                 worker.Stop();
             }
+        }
+
+        private void OnWorkerUpdateError(object sender, UpdateErrorEventArgs args)
+        {
+            this.UpdateError?.Invoke(this, args);
         }
     }
 }

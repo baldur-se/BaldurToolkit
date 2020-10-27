@@ -49,7 +49,14 @@ namespace BaldurToolkit.Entities.Timers
         {
             foreach (var entity in this.entities)
             {
-                entity.Value.Update(deltaTime);
+                try
+                {
+                    entity.Value.Update(deltaTime);
+                }
+                catch (Exception exception)
+                {
+                    this.OnUpdateError(exception);
+                }
             }
         }
     }

@@ -65,14 +65,21 @@ namespace BaldurToolkit.Entities.Timers
                 var entityDeltaTime = regInfo.Value;
 
                 entityDeltaTime.ElapsedTime += deltaTime.ElapsedTime;
-                var interval = this.intervals[(int)entityDeltaTime.Entity.UpdatePriority];
+                var interval = this.GetInterval(entityDeltaTime.Entity.UpdatePriority);
 
                 if (entityDeltaTime.ElapsedTime >= interval)
                 {
                     // Synchronize entity's personal total time with current total time
                     entityDeltaTime.TotalTime = deltaTime.TotalTime;
 
-                    entityDeltaTime.Entity.Update(entityDeltaTime);
+                    try
+                    {
+                        entityDeltaTime.Entity.Update(entityDeltaTime);
+                    }
+                    catch (Exception exception)
+                    {
+                        this.OnUpdateError(exception);
+                    }
 
                     // Reset entity's personal elapsed time and wait till it reaches desired interval
                     entityDeltaTime.ElapsedTime = TimeSpan.Zero;

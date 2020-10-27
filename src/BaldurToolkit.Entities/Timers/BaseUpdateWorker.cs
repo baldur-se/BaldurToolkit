@@ -17,6 +17,8 @@ namespace BaldurToolkit.Entities.Timers
             this.updateInterval = updateInterval;
         }
 
+        public event EventHandler<UpdateErrorEventArgs> UpdateError;
+
         public string Name { get; set; }
 
         public IUpdateTimeTracker Tracker { get; set; }
@@ -63,35 +65,53 @@ namespace BaldurToolkit.Entities.Timers
 
         protected abstract void DoUpdate(DeltaTime deltaTime);
 
+        protected void OnUpdateError(Exception exception)
+        {
+            this.UpdateError?.Invoke(this, new UpdateErrorEventArgs(exception));
+        }
+
         private void Worker()
         {
-            var stopwatch = new Stopwatch();
-            var deltaTime = new DeltaTime();
-
-            while (this.running)
+            try
             {
-                var elapsed = stopwatch.Elapsed;
-                stopwatch.Reset();
-                stopwatch.Start();
+                var stopwatch = new Stopwatch();
+                var deltaTime = new DeltaTime();
 
-                deltaTime.ElapsedTime = elapsed;
-                deltaTime.TotalTime += elapsed;
-
-                this.DoUpdate(deltaTime);
-
-                var updateTime = stopwatch.Elapsed;
-                this.Tracker?.AddValue(updateTime);
-
-                var timeToSleep = (int)(this.updateInterval - updateTime).TotalMilliseconds;
-                if (timeToSleep < 1)
+                while (this.running)
                 {
-                    timeToSleep = 1;
-                }
+                    var elapsed = stopwatch.Elapsed;
+                    stopwatch.Reset();
+                    stopwatch.Start();
 
-                if (this.running)
-                {
-                    this.workerThreadExitResetEvent?.WaitOne(timeToSleep);
+                    deltaTime.ElapsedTime = elapsed;
+                    deltaTime.TotalTime += elapsed;
+
+                    try
+                    {
+                        this.DoUpdate(deltaTime);
+                    }
+                    catch (Exception exception)
+                    {
+                        this.OnUpdateError(exception);
+                    }
+
+                    var updateTime = stopwatch.Elapsed;
+                    var timeToSleep = (int)(this.updateInterval - updateTime).TotalMilliseconds;
+                    if (timeToSleep < 1)
+                    {
+                        timeToSleep = 1;
+                    }
+
+                    this.Tracker?.AddValue(updateTime);
+
+                    if (this.running)
+                    {
+                        this.workerThreadExitResetEvent?.WaitOne(timeToSleep);
+                    }
                 }
+            }
+            catch (ThreadAbortException)
+            {
             }
         }
     }
