@@ -329,7 +329,11 @@ namespace BaldurToolkit.Network.Libuv.Connections
             }
             catch (UvErrorException exception)
             {
-                if (exception.ErrorCode == UvErrorCode.ECONNRESET)
+                if (exception.ErrorCode == UvErrorCode.ECANCELED)
+                {
+                    // Ignore
+                }
+                else if (exception.ErrorCode == UvErrorCode.ECONNRESET)
                 {
                     this.Close();
                 }
