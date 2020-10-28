@@ -109,7 +109,7 @@ namespace BaldurToolkit.Network.Connections
 
                     tcs.TrySetResult(null);
                 };
-                foreach (var connection in connectionsToClose)
+                foreach (var connection in connectionsToClose.ToArray())
                 {
                     connection.Close();
                 }
