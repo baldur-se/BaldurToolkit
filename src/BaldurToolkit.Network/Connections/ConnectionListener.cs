@@ -29,6 +29,11 @@ namespace BaldurToolkit.Network.Connections
         /// </summary>
         public event EventHandler<ConnectionErrorEventArgs> ConnectionError;
 
+        /// <summary>
+        /// Fires when the last opened connection closes.
+        /// </summary>
+        public event EventHandler Closed;
+
         /// <inheritdoc />
         public int ConnectionCount
         {
@@ -84,35 +89,14 @@ namespace BaldurToolkit.Network.Connections
         {
             var tcs = new TaskCompletionSource<object>();
 
-            HashSet<TConnection> connectionsToClose;
-            lock (this.openedConnections)
+            this.Closed += (sender, args) =>
             {
-                connectionsToClose = new HashSet<TConnection>(this.openedConnections);
-            }
+                tcs.TrySetResult(null);
+            };
 
-            if (connectionsToClose.Count == 0)
+            if (this.ConnectionCount == 0)
             {
-                tcs.SetResult(null);
-            }
-            else
-            {
-                this.ConnectionClosed += (sender, args) =>
-                {
-                    lock (connectionsToClose)
-                    {
-                        connectionsToClose.Remove(args.Connection);
-                        if (connectionsToClose.Count > 0)
-                        {
-                            return;
-                        }
-                    }
-
-                    tcs.TrySetResult(null);
-                };
-                foreach (var connection in connectionsToClose.ToArray())
-                {
-                    connection.Close();
-                }
+                tcs.TrySetResult(null);
             }
 
             return tcs.Task;
@@ -152,12 +136,24 @@ namespace BaldurToolkit.Network.Connections
         protected virtual void OnConnectionClosed(object sender, EventArgs args)
         {
             var connection = (TConnection)sender;
+            var closed = false;
             lock (this.openedConnections)
             {
+                var oldCount = this.openedConnections.Count;
                 this.openedConnections.Remove(connection);
+
+                if (oldCount > 0 && this.openedConnections.Count == 0)
+                {
+                    closed = true;
+                }
             }
 
             this.ConnectionClosed?.Invoke(this, new ConnectionEventArgs<TConnection>(connection));
+
+            if (closed)
+            {
+                this.Closed?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
