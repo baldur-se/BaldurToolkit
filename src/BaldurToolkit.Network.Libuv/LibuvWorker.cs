@@ -180,7 +180,11 @@ namespace BaldurToolkit.Network.Libuv
                 {
                     try
                     {
-                        job.WriteRequest.Write();
+                        if (!job.WriteRequest.BaseHandle.IsClosed)
+                        {
+                            job.WriteRequest.Write();
+                        }
+
                         wasWork = true;
                     }
                     catch (Exception exception)
