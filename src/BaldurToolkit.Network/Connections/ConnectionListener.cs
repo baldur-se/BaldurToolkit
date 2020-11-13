@@ -99,6 +99,11 @@ namespace BaldurToolkit.Network.Connections
                 tcs.TrySetResult(null);
             }
 
+            foreach (var connection in this.OpenedConnections)
+            {
+                connection.Close();
+            }
+
             return tcs.Task;
         }
 
