@@ -117,7 +117,7 @@ namespace BaldurToolkit.Cron
 
         private void StartThread()
         {
-            if (this.timerThread == null)
+            if (this.timerThread == null || this.isRunning == false)
             {
                 this.isRunning = true;
                 this.timerThreadExitResetEvent = new ManualResetEvent(false);
