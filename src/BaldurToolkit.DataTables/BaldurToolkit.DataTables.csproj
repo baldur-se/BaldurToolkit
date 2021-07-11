@@ -5,9 +5,9 @@
     <AssemblyName>BaldurToolkit.DataTables</AssemblyName>
     <AssemblyTitle>BaldurToolkit.DataTables</AssemblyTitle>
     <Description>In-memory indexed collections.</Description>
-    <Copyright>Copyright (C) 2010-2018 Baldur Team</Copyright>
+    <Copyright>Copyright (C) 2010-2021 Baldur Team</Copyright>
     <Authors>Baldur Team</Authors>
-    <VersionPrefix>0.6.0</VersionPrefix>
+    <VersionPrefix>0.6.1</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8</LangVersion>
     <NoWarn>$(NoWarn);SA0001;SA1600;SA1602;SA1633;SA1652</NoWarn>
